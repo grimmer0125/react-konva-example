@@ -40,6 +40,7 @@ class App extends Component {
     super(props);
     this.state = {
       image: null,
+      scale: 1,
     };
   }
 
@@ -50,23 +51,29 @@ class App extends Component {
     image.onload = () => {
       this.setState({ image });
     };
+
+    setTimeout(() => {
+      this.setState(state => ({ scale: 2 }));
+    }, 5000);
   }
 
   render() {
     console.log('render');
     // const { image } = this.state;
+    // <Stage width={window.innerWidth} height={window.innerHeight}>
+    console.log('window.innerWidth in render:', window.innerWidth);
     return (
       <div className="App">
-        <Stage width={window.innerWidth} height={window.innerHeight}>
-          <Layer>
+        <Stage width={500} height={500}>
+          <Layer scale={{ x: this.state.scale, y: this.state.scale }}>
             <Group>
               <Image
                 width={500}
                 height={500}
                 image={this.state.image}
               />
-              {/* <Text text="Try click on rect" />
-             <ColoredRect />   */}
+              {/* <Text text="Try click on rect" /> */}
+              <ColoredRect />
             </Group>
           </Layer>
         </Stage>
